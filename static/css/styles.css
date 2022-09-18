@@ -1,0 +1,13 @@
+#navbarNavAltMarkup {
+    position: absolute;
+    right: 0;
+}
+
+#page-footer {
+    position: absolute;
+    bottom: 0;
+}
+
+#footer-github-icon {
+    color: black;
+}
