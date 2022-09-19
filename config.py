@@ -26,7 +26,6 @@ class DevelopmentConfig(Config):
                               f"{os.environ.get('db_hostname')}/" \
                               f"{os.environ.get('dev_db_name')}"
 
-    
-config = {"develop": "DevelopmentConfig",
-          "production": "ProductionConfig"}
 
+config = {"develop": DevelopmentConfig,
+          "production": ProductionConfig}
