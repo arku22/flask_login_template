@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, redirect, url_for
 from flask_wtf import FlaskForm
 from dotenv import load_dotenv
 import os
@@ -50,7 +50,7 @@ class Users(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
-    password_hash = db.Column(db.String(100), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
     registration_datetime = db.Column(db.DateTime, nullable=False, default=datetime.now())
     account_confirmed = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -86,4 +86,17 @@ class UserAccess(db.Model):
 @app.route("/register", methods=["GET", "POST"])
 def register_page():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        if Users.query.filter_by(email=email).first():
+            flash("This email is already in use! Please try another email address or login to your account.")
+            return redirect(url_for("register_page"))
+        new_user = Users(email=email,
+                         first_name=form.first_name.data,
+                         last_name=form.last_name.data,
+                         password=form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
+        flash("You can now login!")
+        return redirect(url_for("register_page"))
     return render_template("register.html", form=form)
