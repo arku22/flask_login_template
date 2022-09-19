@@ -1,1 +1,69 @@
 {% extends "base.html" %}
+
+{% block page_title %}Register{% endblock page_title %}
+
+{% block navLinks %}
+<a class="nav-link" href="#">Home</a>
+<a class="nav-link active" aria-current="page" href="#">Register</a>
+<a class="nav-link" href="#">Log In</a>
+<a class="nav-link" href="#">About</a>
+{% endblock navLinks %}
+
+{% block mainBody %}
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2 class="my-4">Hello, let's create your new account!</h2>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col">
+                        {{ form.first_name.label(class="form-label") }}
+                        {{ form.first_name(class="form-control") }}
+                    </div>
+                    <div class="col">
+                        {{ form.last_name.label(class="form-label") }}
+                        {{ form.last_name(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col-7">
+                        {{ form.password.label(class="form-label") }}
+                        {{ form.password(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="mb-4 row">
+                    <div class="col-7">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        {{ form.confirm_password(class="form-control") }}
+                    </div>
+                </div>
+
+                <div class="mt-4 mb-1">
+                    {{ form.register_btn(class="btn btn-primary") }}
+                </div>
+                <p>
+                    Already have an account?
+                    <a href="#">Sign In</a>
+                </p>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock mainBody %}
