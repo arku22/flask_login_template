@@ -1,4 +1,4 @@
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from flask import render_template, flash, redirect, url_for
 from . import auth
 from ..models import Users, UserAccess
@@ -21,4 +21,10 @@ def register_page():
         db.session.commit()
         flash("You can now login!")
         return redirect(url_for("auth.register_page"))
-    return render_template("register.html", form=form)
+    return render_template("auth/register.html", form=form)
+
+
+@auth.route("/login", methods=["GET", "POST"])
+def login_page():
+    form = LoginForm()
+    return render_template("auth/login.html", form=form)
