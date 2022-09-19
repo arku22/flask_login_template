@@ -38,6 +38,11 @@
                     </div>
                 </div>
 
+                <div class="mb-3 form-check">
+                {{ form.remember_me(class="form-check-input") }}
+                {{ form.remember_me.label(class="form-check-label") }}
+                </div>
+
                 <div class="mt-4 mb-1">
                     {{ form.login_btn(class="btn btn-primary") }}
                 </div>
