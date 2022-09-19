@@ -17,6 +17,6 @@ def create_app(configname):
 
     # register blueprints
     from .auth import auth
-    app.register_blueprint(auth)
+    app.register_blueprint(auth, url_prefix="/auth")
 
     return app
