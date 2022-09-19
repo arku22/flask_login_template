@@ -9,12 +9,13 @@
 <a class="nav-link" href="#">About</a>
 {% endblock navLinks %}
 
-{% block mainBody %}
+{% block formContainer %}
 <div class="container">
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
             <h2 class="my-4">Hello, let's create your new account!</h2>
+            {{ super() }}
         </div>
         <div class="col-2"></div>
     </div>
@@ -66,4 +67,4 @@
         <div class="col"></div>
     </div>
 </div>
-{% endblock mainBody %}
+{% endblock formContainer %}
