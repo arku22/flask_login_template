@@ -1,10 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from config import config
+from flask_login import LoginManager
 
 
 # extensions
 db = SQLAlchemy()
+login_manager = LoginManager()
+login_manager.login_view = "auth.login_page"
 
 
 def create_app(configname):
@@ -14,9 +17,12 @@ def create_app(configname):
 
     # init extensions
     db.init_app(app)
+    login_manager.init_app(app)
 
     # register blueprints
     from .auth import auth
-    app.register_blueprint(auth)
+    app.register_blueprint(auth, url_prefix="/auth")
+    from .user import user
+    app.register_blueprint(user, url_prefix="/user")
 
     return app

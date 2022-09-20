@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block page_title %}Register{% endblock page_title %}
+{% block page_title %}Login{% endblock page_title %}
 
 {% block navLinks %}
 <a class="nav-link" href="#">Home</a>
-<a class="nav-link active" aria-current="page" href="#">Register</a>
-<a class="nav-link" href="#">Log In</a>
+<a class="nav-link" href="{{ url_for('auth.register_page') }}">Register</a>
+<a class="nav-link active" aria-current="page" href="{{ url_for('auth.login_page') }}">Log In</a>
 <a class="nav-link" href="#">About</a>
 {% endblock navLinks %}
 
@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-            <h2 class="my-4">Hello, let's create your new account!</h2>
+            <h2 class="my-4">Please log in to your account</h2>
             {{ super() }}
         </div>
         <div class="col-2"></div>
@@ -31,36 +31,24 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <div class="col">
-                        {{ form.first_name.label(class="form-label") }}
-                        {{ form.first_name(class="form-control") }}
-                    </div>
-                    <div class="col">
-                        {{ form.last_name.label(class="form-label") }}
-                        {{ form.last_name(class="form-control") }}
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
                     <div class="col-7">
                         {{ form.password.label(class="form-label") }}
                         {{ form.password(class="form-control") }}
+                        <a href="#">Forgot Password</a>
                     </div>
                 </div>
 
-                <div class="mb-4 row">
-                    <div class="col-7">
-                        {{ form.confirm_password.label(class="form-label") }}
-                        {{ form.confirm_password(class="form-control") }}
-                    </div>
+                <div class="mb-3 form-check">
+                {{ form.remember_me(class="form-check-input") }}
+                {{ form.remember_me.label(class="form-check-label") }}
                 </div>
 
                 <div class="mt-4 mb-1">
-                    {{ form.register_btn(class="btn btn-primary") }}
+                    {{ form.login_btn(class="btn btn-primary") }}
                 </div>
                 <p>
-                    Already have an account?
-                    <a href="#">Sign In</a>
+                    Don't have an account yet?
+                    <a href="{{ url_for('auth.register_page') }}">Register</a>
                 </p>
             </form>
         </div>
