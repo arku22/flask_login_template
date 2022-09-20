@@ -29,7 +29,7 @@ def register_page():
 def login_page():
     if current_user.is_authenticated:
         flash("You are already logged in!")
-        return redirect(url_for("auth.register_page"))
+        return redirect(url_for("user.user_home"))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -39,8 +39,7 @@ def login_page():
             login_user(user, form.remember_me.data)
             next_pg = request.args.get("next")
             if next_pg is None or not next_pg.startswith('/'):
-                flash("You are logged in!")
-                return redirect(url_for("auth.register_page"))
+                return redirect(url_for("user.user_home"))
             flash("You are logged in!")
             return redirect(next_pg)
         flash("Incorrect email and/or password!")
@@ -52,3 +51,4 @@ def login_page():
 def logout():
     logout_user()
     flash("You have been logged out!")
+    return redirect(url_for("auth.login_page"))

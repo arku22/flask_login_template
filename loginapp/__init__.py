@@ -22,5 +22,7 @@ def create_app(configname):
     # register blueprints
     from .auth import auth
     app.register_blueprint(auth, url_prefix="/auth")
+    from .user import user
+    app.register_blueprint(user, url_prefix="/user")
 
     return app
