@@ -4,6 +4,7 @@ from . import auth
 from ..models import Users, UserAccess
 from loginapp import db
 from flask_login import login_user, login_required, logout_user, current_user
+from ..email import send_email
 
 
 @auth.route("/register", methods=["GET", "POST"])
@@ -20,7 +21,13 @@ def register_page():
                          password=form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash("You can now login!")
+        token = new_user.generate_confirmation_token()
+        send_email(subject="New Account Confirmation",
+                   to=new_user.email,
+                   txt_body="email/new_user_email.txt",
+                   token=token,
+                   user=new_user)
+        flash("A confirmation email has been sent to your email.")
         return redirect(url_for("auth.register_page"))
     return render_template("auth/register.html", form=form)
 
