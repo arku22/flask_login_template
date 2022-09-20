@@ -1,10 +1,11 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-from loginapp import db
+from loginapp import db, login_manager
+from flask_login import UserMixin
 
 
 # create 'users' table
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
@@ -28,16 +29,27 @@ class Users(db.Model):
     def verify_password(self, pw):
         return check_password_hash(self.password_hash, pw)
 
+    def get_id(self):
+        return self.user_id
+
     def __repr__(self):
         return f"user_id={self.user_id}; email={self.email}; Name={self.last_name}, {self.first_name}"
 
 
 # create 'user_access table
-class UserAccess(db.Model):
+class UserAccess(UserMixin, db.Model):
     __tablename__ = "user_access"
     record_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     access_datetime = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
+    def get_id(self):
+        return self.record_id
+
     def __repr__(self):
         return f"user_id={self.user_id}; Name={self.user.last_name}, {self.user.first_name}"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
