@@ -3,8 +3,16 @@
 {% block page_title %}Welcome{% endblock page_title %}
 
 {% block navLinks %}
-<a class="nav-link" href="#">About</a>
-<a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+<a class="nav-link mx-4" href="#">About</a>
+<a class="nav-link dropdown-toggle mx-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Account
+</a>
+<ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
+    <li><a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a></li>
+<!--    <li><a class="dropdown-item" href="#">Another Action</a></li>-->
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Log Out</a></li>
+</ul>
 {% endblock navLinks %}
 
 {% block formContainer %}
