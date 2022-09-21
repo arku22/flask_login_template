@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block page_title %}Welcome{% endblock page_title %}
+
+{% block navLinks %}
+<a class="nav-link" href="#">About</a>
+<a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+{% endblock navLinks %}
+
+{% block formContainer %}
+{{ super() }}
+<h1>Welcome, {{ user.first_name|capitalize }}!</h1>
+{% endblock formContainer %}

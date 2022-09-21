@@ -24,7 +24,6 @@
             </button>
             <div class="collapse navbar-collapse me-3" id="navbarNavAltMarkup">
               <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
                 {% block navLinks %}
                   <!-- Add more nav links here -->
                 {% endblock navLinks %}
@@ -33,9 +32,15 @@
         </div>
     </nav>
 
-    {% block mainBody %}
+    {% block formContainer %}
+        {% for msg in get_flashed_messages() %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
     <!-- modify body content here -->
-    {% endblock mainBody %}
+    {% endblock formContainer %}
 
     <div class="container-fluid" id="page-footer">
         <footer>

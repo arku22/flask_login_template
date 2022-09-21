@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block page_title %}Confirm Account{% endblock page_title %}
+
+{% block navLinks %}
+<a class="nav-link" href="#">About</a>
+<a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+{% endblock navLinks %}
+
+{% block formContainer %}
+{{ super() }}
+<h1>Welcome, {{ user.first_name|capitalize }}</h1>
+
+<h2>You have not confirmed your account yet!</h2>
+
+<p>
+    Please check your email to find an email from us that has a confirmation URL for your account.
+</p>
+
+<p>
+    Need another confirmation email?
+    Click <a href="{{ url_for('auth.resend_confirmation') }}">here</a>
+</p>
+{% endblock formContainer %}

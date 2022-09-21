@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block page_title %}Login{% endblock page_title %}
+
+{% block navLinks %}
+<a class="nav-link" href="#">Home</a>
+<a class="nav-link" href="{{ url_for('auth.register_page') }}">Register</a>
+<a class="nav-link active" aria-current="page" href="{{ url_for('auth.login_page') }}">Log In</a>
+<a class="nav-link" href="#">About</a>
+{% endblock navLinks %}
+
+{% block formContainer %}
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h2 class="my-4">Please log in to your account</h2>
+            {{ super() }}
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col-7">
+                        {{ form.password.label(class="form-label") }}
+                        {{ form.password(class="form-control") }}
+                        <a href="#">Forgot Password</a>
+                    </div>
+                </div>
+
+                <div class="mb-3 form-check">
+                {{ form.remember_me(class="form-check-input") }}
+                {{ form.remember_me.label(class="form-check-label") }}
+                </div>
+
+                <div class="mt-4 mb-1">
+                    {{ form.login_btn(class="btn btn-primary") }}
+                </div>
+                <p>
+                    Don't have an account yet?
+                    <a href="{{ url_for('auth.register_page') }}">Register</a>
+                </p>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock formContainer %}
