@@ -28,3 +28,11 @@ class LoginForm(FlaskForm):
                              validators=[DataRequired()])
     remember_me = BooleanField(label="Remember me")
     login_btn = SubmitField(label="Sign In")
+
+
+# create password reset form
+class ResetPassword(FlaskForm):
+
+    email = StringField(label="Enter the email associated with your account",
+                        validators=[DataRequired(), Email()])
+    submit_btn = SubmitField(label="Submit")

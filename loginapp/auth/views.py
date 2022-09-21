@@ -1,4 +1,4 @@
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, ResetPassword
 from flask import render_template, flash, redirect, url_for, request
 from . import auth
 from ..models import Users, UserAccess
@@ -102,3 +102,9 @@ def resend_confirmation():
                user=current_user)
     flash("A new confirmation email has been sent to your email.")
     return redirect(url_for("auth.login_page"))
+
+
+@auth.route("/reset_password")
+def reset_password():
+    form = ResetPassword()
+    return render_template("auth/reset_password.html", form=form)
