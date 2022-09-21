@@ -59,3 +59,18 @@ def logout():
     logout_user()
     flash("You have been logged out!")
     return redirect(url_for("auth.login_page"))
+
+
+@auth.route("/confirm/<token>")
+@login_required
+def confirm_user(token):
+    # current user already confirmed
+    if current_user.account_confirmed:
+        flash("Account already confirmed!")
+        return redirect(url_for("user.user_home"))
+    if current_user.confirm_user(token):
+        db.session.commit()
+        flash("Your account has been confirmed!")
+    else:
+        flash("This URL is invalid or expired!")
+    return redirect(url_for("user.user_home"))

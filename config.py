@@ -16,7 +16,7 @@ class Config:
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get("email_username")
-    MAIL_PASSWORD = os.environt.get("email_password")
+    MAIL_PASSWORD = os.environ.get("email_password")
     MAIL_SUBJECT_PREFIX = "LoginApp - "
     MAIL_SENDER = os.environ.get("email_address_sender")
 

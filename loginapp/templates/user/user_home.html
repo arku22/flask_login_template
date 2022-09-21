@@ -8,5 +8,6 @@
 {% endblock navLinks %}
 
 {% block formContainer %}
+{{ super() }}
 <h1>Welcome, {{ user.first_name|capitalize }}!</h1>
 {% endblock formContainer %}

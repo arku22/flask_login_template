@@ -1,7 +1,7 @@
 Hello {{ user.first_name|capitalize }},
 
-Thank you for registering with us! Please confirm your newly created account by clicking
- on the below URL:
+Thank you for registering with us! Please confirm your newly created account by clicking on the below URL:
+
 {{ url_for("auth.confirm_user", token=token, _external=True) }}
 
 Sincerely,
