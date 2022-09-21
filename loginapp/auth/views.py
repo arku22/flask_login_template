@@ -27,7 +27,7 @@ def register_page():
                    txt_body="email/new_user_email.txt",
                    token=token,
                    user=new_user)
-        flash("A confirmation email has been sent to your email.")
+        flash("Account created! A confirmation email has been sent to your email.")
         return redirect(url_for("auth.register_page"))
     return render_template("auth/register.html", form=form)
 
