@@ -35,7 +35,6 @@ def register_page():
 @auth.route("/login", methods=["GET", "POST"])
 def login_page():
     if current_user.is_authenticated:
-        flash("You are already logged in!")
         return redirect(url_for("user.user_home"))
 
     form = LoginForm()
@@ -74,3 +73,32 @@ def confirm_user(token):
     else:
         flash("This URL is invalid or expired!")
     return redirect(url_for("user.user_home"))
+
+
+@auth.before_app_request
+def before_request():
+    if current_user.is_authenticated  \
+            and not current_user.account_confirmed  \
+            and request.blueprint != "auth" \
+            and request.endpoint != "static":
+        return redirect(url_for("auth.unconfirmed"))
+
+
+@auth.route("/unconfirmed")
+def unconfirmed():
+    if current_user.is_anonymous or current_user.account_confirmed:
+        return redirect(url_for("user.user_home"))
+    return render_template("auth/confirm.html", user=current_user)
+
+
+@auth.route("/confirm")
+@login_required
+def resend_confirmation():
+    token = current_user.generate_confirmation_token()
+    send_email(subject="New Account Confirmation",
+               to=current_user.email,
+               txt_body="email/new_user_email.txt",
+               token=token,
+               user=current_user)
+    flash("A new confirmation email has been sent to your email.")
+    return redirect(url_for("auth.login_page"))
