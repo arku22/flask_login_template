@@ -1,7 +1,7 @@
 from . import user
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .forms import ChangePassword
+from .forms import ChangePassword, ChangeEmail
 from ..models import db
 
 
@@ -26,3 +26,10 @@ def change_password():
         flash("Password changed successfully!")
         return redirect(url_for('user.user_home'))
     return render_template("user/change_password.html", form=form)
+
+
+@user.route("/change_email", methods=["GET", "POST"])
+@login_required
+def change_email():
+    form = ChangeEmail()
+    return render_template("user/change_email.html", form=form)
