@@ -47,6 +47,25 @@ class Users(UserMixin, db.Model):
         db.session.add(self)
         return True
 
+    def generate_pw_reset_token(self, expiration=3600):
+        s = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
+        return s.dumps({"reset_pw": self.user_id}).decode("utf-8")
+
+    @staticmethod
+    def reset_password(token, new_password):
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            data = s.loads(token.encode("utf-8"))
+        except:
+            return False
+        # get user using payload
+        user = Users.query.get(data.get("reset_pw"))
+        if user is None:
+            return False
+        user.password = new_password
+        db.session.add(user)
+        return True
+
     def get_id(self):
         return self.user_id
 
