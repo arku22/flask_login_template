@@ -1,4 +1,4 @@
-from .forms import RegistrationForm, LoginForm, ResetPassword
+from .forms import RegistrationForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm
 from flask import render_template, flash, redirect, url_for, request
 from . import auth
 from ..models import Users, UserAccess
@@ -104,7 +104,37 @@ def resend_confirmation():
     return redirect(url_for("auth.login_page"))
 
 
-@auth.route("/reset_password")
-def reset_password():
-    form = ResetPassword()
+@auth.route("/reset_password", methods=["GET", "POST"])
+def request_reset_password():
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user_email = form.email.data.lower()
+        search_result = Users.query.filter_by(email=user_email).first()
+        if search_result:
+            token = search_result.generate_pw_reset_token()
+            send_email(subject="Password Reset Request",
+                       to=user_email,
+                       txt_body="email/pw_reset.txt",
+                       token=token,
+                       user=search_result)
+            flash("Please check your email. An email with instructions to reset password has been sent out")
+            return redirect(url_for("auth.login_page"))
+
+        flash("An account with that email does not exist!")
+        return redirect(url_for("auth.request_reset_password"))
+
+    return render_template("auth/reset_password_request.html", form=form)
+
+
+@auth.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        if Users.reset_password(token=token, new_password=form.password.data):
+            db.session.commit()
+            flash("Your password has been reset!")
+            return redirect(url_for("auth.login_page"))
+        flash("That URL has expired or is invalid!")
+        return redirect(url_for("auth.request_reset_password"))
     return render_template("auth/reset_password.html", form=form)
+
