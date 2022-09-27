@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import PasswordField, SubmitField, StringField
-from wtforms.validators import DataRequired, EqualTo, Email
+from wtforms.validators import DataRequired, EqualTo, Email, ValidationError
+from ..models import Users
 
 
 class ChangePassword(FlaskForm):
@@ -17,11 +18,12 @@ class ChangePassword(FlaskForm):
 
 class ChangeEmail(FlaskForm):
 
-    old_email = StringField(label="Email",
-                            validators=[DataRequired(), Email()])
     new_email = StringField(label="New Email",
-                            validators=[DataRequired(), Email(), EqualTo("confirm_new_email",
-                                                                         message="Recheck entered new email!")])
-    confirm_new_email = StringField(label="Confirm New Email",
-                                    validators=[DataRequired(), Email()])
+                            validators=[DataRequired(), Email()])
+    password = PasswordField(label="Password",
+                             validators=[DataRequired()])
     submit_btn = SubmitField(label="Change Email")
+
+    def validate_new_email(self, field):
+        if Users.query.filter_by(email=field.data.lower()).first():
+            raise ValidationError("Email already registered!")

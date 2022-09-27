@@ -47,6 +47,22 @@ class Users(UserMixin, db.Model):
         db.session.add(self)
         return True
 
+    def generate_email_change_token(self, new_email, expiration=3600):
+        s = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
+        return s.dumps({"email_change": self.user_id, "new_email": new_email}).decode("utf-8")
+
+    def email_change(self, token):
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            data = s.loads(token.encode("utf-8"))
+        except:
+            return False
+        if data.get("email_change") != self.user_id or data.get("new_email") is None:
+            return False
+        self.email = data.get("new_email")
+        db.session.add(self)
+        return True
+
     def generate_pw_reset_token(self, expiration=3600):
         s = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
         return s.dumps({"reset_pw": self.user_id}).decode("utf-8")

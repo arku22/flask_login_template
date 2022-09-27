@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block page_title %}Change Password{% endblock page_title %}
+{% block page_title %}Change Email{% endblock page_title %}
 
 {% block navLinks %}
 <a class="nav-link mx-4" href="#">About</a>
@@ -8,6 +8,7 @@
     Account
 </a>
 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
+    <li><a class="dropdown-item" href="{{ url_for('user.request_change_email') }}">Change Email</a></li>
     <li><a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a></li>
 <!--    <li><a class="dropdown-item" href="#">Another Action</a></li>-->
     <li><hr class="dropdown-divider"></li>
@@ -32,8 +33,11 @@
                 {{ form.hidden_tag() }}
 
                 <div class="mb-3">
-                {{ form.old_email.label(class="form-label") }}
-                {{ form.old_email(class="form-control") }}
+                    {% for field, err in form.errors.items() %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ err[0] }}
+                        </div>
+                    {% endfor %}
                 </div>
 
                 <div class="mb-3">
@@ -42,8 +46,8 @@
                 </div>
 
                 <div class="mb-3">
-                {{ form.confirm_new_email.label(class="form-label") }}
-                {{ form.confirm_new_email(class="form-control") }}
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
                 </div>
 
                 <div class="mt-4 mb-1">
