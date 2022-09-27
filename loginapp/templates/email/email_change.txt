@@ -1,6 +1,6 @@
 Hello {{ user.first_name|capitalize }},
 
-You have requested for a password reset. Please click the below link to set a new password for your account:
+You have requested to change your registered email address. Please click the below link to confirm this change:
 
 {{ url_for("user.change_email", token=token, _external=True) }}
 
