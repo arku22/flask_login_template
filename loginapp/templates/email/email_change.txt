@@ -1,0 +1,10 @@
+Hello {{ user.first_name|capitalize }},
+
+You have requested to change your registered email address. Please click the below link to confirm this change:
+
+{{ url_for("user.change_email", token=token, _external=True) }}
+
+If you did not make this request then ignore this email.
+
+Sincerely,
+The LoginApp Team
