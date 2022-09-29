@@ -13,7 +13,8 @@ def register_page():
     if form.validate_on_submit():
         email = form.email.data
         if Users.query.filter_by(email=email).first():
-            flash("This email is already in use! Please try another email address or login to your account.")
+            flash("This email is already in use! Please try another email address or login to your account.",
+                  category="error")
             return redirect(url_for("auth.register_page"))
         new_user = Users(email=email,
                          first_name=form.first_name.data,
@@ -27,7 +28,8 @@ def register_page():
                    txt_body="email/new_user_email.txt",
                    token=token,
                    user=new_user)
-        flash("Account created! A confirmation email has been sent to your email.")
+        flash("Account created! A confirmation email has been sent to your email.",
+              category="success")
         return redirect(url_for("auth.register_page"))
     return render_template("auth/register.html", form=form)
 
