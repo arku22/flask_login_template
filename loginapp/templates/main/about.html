@@ -11,6 +11,7 @@
         <a class="nav-link active" href="{{ 'main.about' }}">About</a>
     {% else %}
     <!-- navigation links for use IS logged in -->
+        <a class="nav-link active" href="{{ url_for('user.user_home') }}">Home</a>
         <a class="nav-link mx-4" href="{{ url_for('main.about') }}">About</a>
         <a class="nav-link dropdown-toggle mx-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Account
