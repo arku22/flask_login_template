@@ -17,12 +17,13 @@
         <div class="container-fluid">
             {% if current_user.is_authenticated %}
                 <a class="navbar-brand" href="{{ url_for('user.user_home') }}">
+                    <i class="fa-solid fa-fingerprint me-1"></i>LoginApp
+                </a>
             {% else %}
                 <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                    <i class="fa-solid fa-fingerprint me-1"></i>LoginApp
+                </a>
             {% endif %}
-                <i class="fa-solid fa-fingerprint me-1"></i>
-                LoginApp
-            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,6 +37,11 @@
         </div>
     </nav>
 
+    <!-- any content that is not a form will go in this block -->
+    {% block genericBody %}
+    {% endblock genericBody%}
+
+    <!-- any content that IS a form will go in this block -->
     {% block formContainer %}
         {% for category,msg in get_flashed_messages(with_categories=true) %}
             {% if category=="error" %}
