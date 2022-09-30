@@ -57,8 +57,10 @@ def request_change_email():
 def change_email(token):
     if current_user.email_change(token):
         db.session.commit()
-        flash("Your email has been changed! Please login with your new email id.")
+        flash("Your email has been changed! Please login with your new email id.",
+              category="success")
         logout_user()
         return redirect(url_for("auth.login_page"))
-    flash("That token is invalid or expired")
+    flash("That token is invalid or expired",
+          category="error")
     return redirect(url_for("user.user_home"))
