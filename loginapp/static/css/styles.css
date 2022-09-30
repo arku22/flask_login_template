@@ -1,0 +1,26 @@
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+body {
+    margin-bottom: 20%;
+}
+
+#navbarNavAltMarkup {
+    position: absolute;
+    right: 0;
+}
+
+#page-footer {
+    position: absolute;
+    bottom: 0;
+}
+
+#footer-github-icon {
+    color: black;
+}
+
+form  a {
+    text-decoration: None;
+}
