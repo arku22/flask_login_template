@@ -23,6 +23,8 @@ def create_app(configname):
     mail.init_app(app)
 
     # register blueprints
+    from .main import main
+    app.register_blueprint(main, url_prefix="/")
     from .auth import auth
     app.register_blueprint(auth, url_prefix="/auth")
     from .user import user
