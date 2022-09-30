@@ -5,11 +5,11 @@
 {% block navLinks %}
 <a class="nav-link" href="{{ url_for('user.user_home') }}">Home</a>
 <a class="nav-link mx-4" href="{{ url_for('main.about') }}">About</a>
-<a class="nav-link active dropdown-toggle mx-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<a class="nav-link dropdown-toggle mx-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Account
 </a>
 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
-    <li><a class="dropdown-item" href="{{ url_for('user.request_change_email') }}">Change Email</a></li>
+    <li><a class="dropdown-item active" href="{{ url_for('user.request_change_email') }}" aria-current="true">Change Email</a></li>
     <li><a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a></li>
 <!--    <li><a class="dropdown-item" href="#">Another Action</a></li>-->
     <li><hr class="dropdown-divider"></li>
