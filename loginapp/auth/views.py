@@ -70,13 +70,16 @@ def logout():
 def confirm_user(token):
     # current user already confirmed
     if current_user.account_confirmed:
-        flash("Account already confirmed!")
+        flash("Account already confirmed!",
+              category="info")
         return redirect(url_for("user.user_home"))
     if current_user.confirm_user(token):
         db.session.commit()
-        flash("Your account has been confirmed!")
+        flash("Your account has been confirmed!",
+              category="success")
     else:
-        flash("This URL is invalid or expired!")
+        flash("This URL is invalid or expired!",
+              category="error")
     return redirect(url_for("user.user_home"))
 
 
