@@ -25,11 +25,12 @@
     {% endif %}
 {% endblock navLinks %}
 
-{% block formContainer %}
-{{ super() }}
-<h1>Welcome to the webapp's "About" page!</h1>
+{% block genericBody %}
+<div class="container mt-4">
+    <h1>Welcome to the webapp's "About" page!</h1>
 
-<p>
-    This webapp is a template that can be used to setup authentication for web apps using the "Flask" framework for Python.
-</p>
-{% endblock formContainer %}
+    <p>
+        This webapp is a template that can be used to setup authentication for web apps using the "Flask" framework for Python.
+    </p>
+</div>
+{% endblock genericBody %}
