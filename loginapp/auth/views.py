@@ -48,9 +48,11 @@ def login_page():
             next_pg = request.args.get("next")
             if next_pg is None or not next_pg.startswith('/'):
                 return redirect(url_for("user.user_home"))
-            flash("You are logged in!")
+            flash("You are logged in!",
+                  category="success")
             return redirect(next_pg)
-        flash("Incorrect email and/or password!")
+        flash("Incorrect email and/or password!",
+              category="error")
     return render_template("auth/login.html", form=form)
 
 
