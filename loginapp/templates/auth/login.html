@@ -44,7 +44,7 @@
                     <div class="col-7">
                         {{ form.password.label(class="form-label") }}
                         {{ form.password(class="form-control") }}
-                        <a href="{{ url_for('auth.request_reset_password') }}">Forgot Password</a>
+                        <a href="{{ url_for('auth.request_reset_password') }}" class="link-primary">Forgot Password</a>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                 </div>
                 <p>
                     Don't have an account yet?
-                    <a href="{{ url_for('auth.register_page') }}">Register</a>
+                    <a href="{{ url_for('auth.register_page') }}" class="link-primary">Register</a>
                 </p>
             </form>
         </div>
