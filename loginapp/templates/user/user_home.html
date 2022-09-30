@@ -3,7 +3,8 @@
 {% block page_title %}Welcome{% endblock page_title %}
 
 {% block navLinks %}
-<a class="nav-link mx-4" href="#">About</a>
+<a class="nav-link active" href="{{ url_for('user.user_home') }}">Home</a>
+<a class="nav-link mx-4" href="{{ url_for('main.about') }}">About</a>
 <a class="nav-link dropdown-toggle mx-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Account
 </a>
@@ -15,7 +16,8 @@
 </ul>
 {% endblock navLinks %}
 
-{% block formContainer %}
-{{ super() }}
-<h1>Welcome, {{ user.first_name|capitalize }}!</h1>
-{% endblock formContainer %}
+{% block genericBody %}
+<div class="container mt-4">
+    <h1>Welcome, {{ user.first_name|capitalize }}!</h1>
+</div>
+{% endblock genericBody %}

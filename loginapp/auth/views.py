@@ -13,7 +13,8 @@ def register_page():
     if form.validate_on_submit():
         email = form.email.data
         if Users.query.filter_by(email=email).first():
-            flash("This email is already in use! Please try another email address or login to your account.")
+            flash("This email is already in use! Please try another email address or login to your account.",
+                  category="error")
             return redirect(url_for("auth.register_page"))
         new_user = Users(email=email,
                          first_name=form.first_name.data,
@@ -27,7 +28,8 @@ def register_page():
                    txt_body="email/new_user_email.txt",
                    token=token,
                    user=new_user)
-        flash("Account created! A confirmation email has been sent to your email.")
+        flash("Account created! A confirmation email has been sent to your email.",
+              category="success")
         return redirect(url_for("auth.register_page"))
     return render_template("auth/register.html", form=form)
 
@@ -46,9 +48,11 @@ def login_page():
             next_pg = request.args.get("next")
             if next_pg is None or not next_pg.startswith('/'):
                 return redirect(url_for("user.user_home"))
-            flash("You are logged in!")
+            flash("You are logged in!",
+                  category="success")
             return redirect(next_pg)
-        flash("Incorrect email and/or password!")
+        flash("Incorrect email and/or password!",
+              category="error")
     return render_template("auth/login.html", form=form)
 
 
@@ -56,7 +60,8 @@ def login_page():
 @login_required
 def logout():
     logout_user()
-    flash("You have been logged out!")
+    flash("You have been logged out!",
+          category="success")
     return redirect(url_for("auth.login_page"))
 
 
@@ -65,13 +70,16 @@ def logout():
 def confirm_user(token):
     # current user already confirmed
     if current_user.account_confirmed:
-        flash("Account already confirmed!")
+        flash("Account already confirmed!",
+              category="info")
         return redirect(url_for("user.user_home"))
     if current_user.confirm_user(token):
         db.session.commit()
-        flash("Your account has been confirmed!")
+        flash("Your account has been confirmed!",
+              category="success")
     else:
-        flash("This URL is invalid or expired!")
+        flash("This URL is invalid or expired!",
+              category="error")
     return redirect(url_for("user.user_home"))
 
 
@@ -100,7 +108,8 @@ def resend_confirmation():
                txt_body="email/new_user_email.txt",
                token=token,
                user=current_user)
-    flash("A new confirmation email has been sent to your email.")
+    flash("A new confirmation email has been sent to your email.",
+          category="info")
     return redirect(url_for("auth.login_page"))
 
 
@@ -117,10 +126,12 @@ def request_reset_password():
                        txt_body="email/pw_reset.txt",
                        token=token,
                        user=search_result)
-            flash("Please check your email. An email with instructions to reset password has been sent out")
+            flash("Please check your email. An email with instructions to reset password has been sent out",
+                  category="info")
             return redirect(url_for("auth.login_page"))
 
-        flash("An account with that email does not exist!")
+        flash("An account with that email does not exist!",
+              category="error")
         return redirect(url_for("auth.request_reset_password"))
 
     return render_template("auth/reset_password_request.html", form=form)
@@ -132,9 +143,11 @@ def reset_password(token):
     if form.validate_on_submit():
         if Users.reset_password(token=token, new_password=form.password.data):
             db.session.commit()
-            flash("Your password has been reset!")
+            flash("Your password has been reset!",
+                  category="success")
             return redirect(url_for("auth.login_page"))
-        flash("That URL has expired or is invalid!")
+        flash("That URL has expired or is invalid!",
+              category="error")
         return redirect(url_for("auth.request_reset_password"))
     return render_template("auth/reset_password.html", form=form)
 

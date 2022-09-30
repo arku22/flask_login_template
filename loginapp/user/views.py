@@ -19,12 +19,14 @@ def change_password():
     if form.validate_on_submit():
         old_pw = form.old_password.data
         if not current_user.verify_password(old_pw):
-            flash("Incorrect password entered! Please try again.")
+            flash("Incorrect password entered! Please try again.",
+                  category="error")
             return redirect(url_for("user.change_password"))
         current_user.password = form.new_password.data
         db.session.add(current_user)
         db.session.commit()
-        flash("Password changed successfully!")
+        flash("Password changed successfully!",
+              category="success")
         return redirect(url_for('user.user_home'))
     return render_template("user/change_password.html", form=form)
 
@@ -42,9 +44,11 @@ def request_change_email():
                        txt_body="email/email_change.txt",
                        token=token,
                        user=current_user)
-            flash("An email with steps to change your email address was sent to your new email.")
+            flash("An email with steps to change your email address was sent to your new email.",
+                  category="info")
             return redirect(url_for("user.user_home"))
-        flash("Invalid email or password")
+        flash("Invalid email or password",
+              category="error")
     return render_template("user/change_email.html", form=form)
 
 
@@ -53,8 +57,10 @@ def request_change_email():
 def change_email(token):
     if current_user.email_change(token):
         db.session.commit()
-        flash("Your email has been changed! Please login with your new email id.")
+        flash("Your email has been changed! Please login with your new email id.",
+              category="success")
         logout_user()
         return redirect(url_for("auth.login_page"))
-    flash("That token is invalid or expired")
+    flash("That token is invalid or expired",
+          category="error")
     return redirect(url_for("user.user_home"))

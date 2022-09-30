@@ -3,12 +3,13 @@
 {% block page_title %}Change Email{% endblock page_title %}
 
 {% block navLinks %}
-<a class="nav-link mx-4" href="#">About</a>
+<a class="nav-link" href="{{ url_for('user.user_home') }}">Home</a>
+<a class="nav-link mx-4" href="{{ url_for('main.about') }}">About</a>
 <a class="nav-link dropdown-toggle mx-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Account
 </a>
 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-light">
-    <li><a class="dropdown-item" href="{{ url_for('user.request_change_email') }}">Change Email</a></li>
+    <li><a class="dropdown-item active" href="{{ url_for('user.request_change_email') }}" aria-current="true">Change Email</a></li>
     <li><a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a></li>
 <!--    <li><a class="dropdown-item" href="#">Another Action</a></li>-->
     <li><hr class="dropdown-divider"></li>
@@ -35,7 +36,9 @@
                 <div class="mb-3">
                     {% for field, err in form.errors.items() %}
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i>
                             {{ err[0] }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endfor %}
                 </div>

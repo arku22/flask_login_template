@@ -3,10 +3,10 @@
 {% block page_title %}Login{% endblock page_title %}
 
 {% block navLinks %}
-<a class="nav-link" href="#">Home</a>
+<a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
 <a class="nav-link" href="{{ url_for('auth.register_page') }}">Register</a>
 <a class="nav-link active" aria-current="page" href="{{ url_for('auth.login_page') }}">Log In</a>
-<a class="nav-link" href="#">About</a>
+<a class="nav-link" href="{{ url_for('main.about') }}">About</a>
 {% endblock navLinks %}
 
 {% block formContainer %}
@@ -26,6 +26,16 @@
                 {{ form.hidden_tag() }}
 
                 <div class="mb-3">
+                    {% for field, err in form.errors.items() %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                            {{ err[0] }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
                 {{ form.email.label(class="form-label") }}
                 {{ form.email(class="form-control") }}
                 </div>
@@ -34,7 +44,7 @@
                     <div class="col-7">
                         {{ form.password.label(class="form-label") }}
                         {{ form.password(class="form-control") }}
-                        <a href="{{ url_for('auth.request_reset_password') }}">Forgot Password</a>
+                        <a href="{{ url_for('auth.request_reset_password') }}" class="link-primary">Forgot Password</a>
                     </div>
                 </div>
 
@@ -48,7 +58,7 @@
                 </div>
                 <p>
                     Don't have an account yet?
-                    <a href="{{ url_for('auth.register_page') }}">Register</a>
+                    <a href="{{ url_for('auth.register_page') }}" class="link-primary">Register</a>
                 </p>
             </form>
         </div>
