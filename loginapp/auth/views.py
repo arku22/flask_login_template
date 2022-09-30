@@ -126,10 +126,12 @@ def request_reset_password():
                        txt_body="email/pw_reset.txt",
                        token=token,
                        user=search_result)
-            flash("Please check your email. An email with instructions to reset password has been sent out")
+            flash("Please check your email. An email with instructions to reset password has been sent out",
+                  category="info")
             return redirect(url_for("auth.login_page"))
 
-        flash("An account with that email does not exist!")
+        flash("An account with that email does not exist!",
+              category="error")
         return redirect(url_for("auth.request_reset_password"))
 
     return render_template("auth/reset_password_request.html", form=form)
