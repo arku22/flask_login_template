@@ -3,7 +3,7 @@
 {% block page_title %}Register{% endblock page_title %}
 
 {% block navLinks %}
-<a class="nav-link" href="#">Home</a>
+<a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
 <a class="nav-link active" aria-current="page" href="{{ url_for('auth.register_page') }}">Register</a>
 <a class="nav-link" href="{{ url_for('auth.login_page') }}">Log In</a>
 <a class="nav-link" href="#">About</a>
