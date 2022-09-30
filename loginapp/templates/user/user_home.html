@@ -16,7 +16,8 @@
 </ul>
 {% endblock navLinks %}
 
-{% block formContainer %}
-{{ super() }}
-<h1>Welcome, {{ user.first_name|capitalize }}!</h1>
-{% endblock formContainer %}
+{% block genericBody %}
+<div class="container mt-4">
+    <h1>Welcome, {{ user.first_name|capitalize }}!</h1>
+</div>
+{% endblock genericBody %}
