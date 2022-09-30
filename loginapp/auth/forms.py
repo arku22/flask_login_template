@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import Email, DataRequired, EqualTo
+from wtforms.validators import Email, DataRequired, EqualTo, Length
 
 
 # create a registration form
@@ -13,7 +13,11 @@ class RegistrationForm(FlaskForm):
     last_name = StringField(label="Last Name",
                             validators=[DataRequired()])
     password = PasswordField(label="Password",
-                             validators=[DataRequired(), EqualTo("confirm_password", message="Passwords must match!")])
+                             validators=[DataRequired(),
+                                         EqualTo("confirm_password", message="Passwords must match!"),
+                                         Length(min=6,
+                                                max=30,
+                                                message="Password must be between 6 & 30 characters long!")])
     confirm_password = PasswordField(label="Confirm Password",
                                      validators=[DataRequired()])
     register_btn = SubmitField(label="Register")
@@ -41,7 +45,12 @@ class ResetPasswordRequestForm(FlaskForm):
 # create password reset form
 class ResetPasswordForm(FlaskForm):
     password = PasswordField(label="Password",
-                             validators=[DataRequired(), EqualTo("confirm_password", message="Passwords must match!")])
+                             validators=[DataRequired(),
+                                         EqualTo("confirm_password", message="Passwords must match!"),
+                                         Length(min=6,
+                                                max=30,
+                                                message="Password must be between 6 & 30 characters long!")
+                                         ])
     confirm_password = PasswordField(label="Confirm Password",
                                      validators=[DataRequired()])
     submit_btn = SubmitField(label="Submit")
