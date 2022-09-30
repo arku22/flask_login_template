@@ -44,9 +44,11 @@ def request_change_email():
                        txt_body="email/email_change.txt",
                        token=token,
                        user=current_user)
-            flash("An email with steps to change your email address was sent to your new email.")
+            flash("An email with steps to change your email address was sent to your new email.",
+                  category="info")
             return redirect(url_for("user.user_home"))
-        flash("Invalid email or password")
+        flash("Invalid email or password",
+              category="error")
     return render_template("user/change_email.html", form=form)
 
 
