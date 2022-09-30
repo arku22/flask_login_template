@@ -108,7 +108,8 @@ def resend_confirmation():
                txt_body="email/new_user_email.txt",
                token=token,
                user=current_user)
-    flash("A new confirmation email has been sent to your email.")
+    flash("A new confirmation email has been sent to your email.",
+          category="info")
     return redirect(url_for("auth.login_page"))
 
 
