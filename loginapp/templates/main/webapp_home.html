@@ -9,11 +9,12 @@
 <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
 {% endblock navLinks %}
 
-{% block formContainer %}
-{{ super() }}
-<h1>Welcome to the webapp's homepage!</h1>
+{% block genericBody %}
+<div class="container mt-4">
+    <h1>Welcome to the webapp's homepage!</h1>
 
-<p>
-    To begin, please click on any of the options on the navigation bar on the top right of this page.
-</p>
-{% endblock formContainer %}
+    <p>
+        To begin, please click on any of the options on the navigation bar on the top right of this page.
+    </p>
+</div>
+{% endblock genericBody %}
