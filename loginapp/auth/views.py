@@ -143,9 +143,11 @@ def reset_password(token):
     if form.validate_on_submit():
         if Users.reset_password(token=token, new_password=form.password.data):
             db.session.commit()
-            flash("Your password has been reset!")
+            flash("Your password has been reset!",
+                  category="success")
             return redirect(url_for("auth.login_page"))
-        flash("That URL has expired or is invalid!")
+        flash("That URL has expired or is invalid!",
+              category="error")
         return redirect(url_for("auth.request_reset_password"))
     return render_template("auth/reset_password.html", form=form)
 
