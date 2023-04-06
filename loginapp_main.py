@@ -3,7 +3,7 @@ from loginapp.models import Users, UserAccess
 from flask_migrate import Migrate
 
 
-app = create_app("production")
+app = create_app("develop")
 
 migrate = Migrate(app, db)
 
